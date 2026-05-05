@@ -4,6 +4,9 @@
 - Brix A. Directo
 - Cyrille John M. Rubis
 - Djaunathan Albert S. Madayag
+- Jan Alexis G. Roldan
+- Jibreel Quimson
+- Christian
 
 **Course / Section:** BSIT-III
 
@@ -205,6 +208,9 @@ Caption: *"AI Classifier — Upload & Predict Interface"* and *"Student Manageme
   - **Brix A. Directo**
   - **Cyrille John M. Rubis**
   - **Djaunathan Albert S. Madayag**
+  - **Jan Alexis G. Roldan**
+  - **Jibreel Quimson**
+  - **Christian**
 - Course / Section: **BSIT-III**
 - Each member displayed as a card with gradient avatar initial and role
 - Short description of the project context

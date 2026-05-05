@@ -358,11 +358,14 @@ export default function LandingPage() {
               web application into a single unified platform.
             </p>
 
-            <div className="grid sm:grid-cols-3 gap-4 mb-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
               {[
-                { initial: "B", name: "Brix A. Directo", role: "Lead Developer" },
-                { initial: "C", name: "Cyrille John M. Rubis", role: "Developer" },
+                { initial: "B", name: "Brix A. Directo",              role: "Lead Developer" },
+                { initial: "C", name: "Cyrille John M. Rubis",        role: "Developer" },
                 { initial: "D", name: "Djaunathan Albert S. Madayag", role: "Developer" },
+                { initial: "J", name: "Jan Alexis G. Roldan",         role: "Developer" },
+                { initial: "J", name: "Jibreel Quimson",              role: "Developer" },
+                { initial: "C", name: "Christian",                    role: "Developer" },
               ].map((member) => (
                 <div key={member.name} className="flex items-center gap-3 bg-slate-800 border border-slate-700 rounded-xl p-4">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-sm font-black text-white flex-shrink-0">
@@ -408,7 +411,7 @@ export default function LandingPage() {
 
           <div className="border-t border-slate-800 mt-6 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-600">
             <p>© 2026 GenderLens AI — ITE03 + EVENTDP Final Project</p>
-            <p>Directo · Rubis · Madayag · BSIT-III</p>
+            <p>Directo · Rubis · Madayag · Roldan · Quimson · Christian · BSIT-III</p>
           </div>
         </div>
       </footer>

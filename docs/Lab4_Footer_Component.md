@@ -4,6 +4,9 @@
 - Brix A. Directo
 - Cyrille John M. Rubis
 - Djaunathan Albert S. Madayag
+- Jan Alexis G. Roldan
+- Jibreel Quimson
+- Christian
 
 **Course / Section:** BSIT-III
 
@@ -113,4 +116,4 @@ const TECH = [
 - The "FP" logo badge + "GenderLens AI" on the left
 - Tech stack pills on the right
 - Copyright line: "© 2026 GenderLens AI — ITE03 + EVENTDP Final Project"
-- Developer credit: "Directo · Rubis · Madayag · BSIT-III"
+- Developer credit: "Directo · Rubis · Madayag · Roldan · Quimson · Christian · BSIT-III"
