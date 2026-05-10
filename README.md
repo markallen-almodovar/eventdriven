@@ -63,8 +63,8 @@ Before running the project, make sure you have:
 ### Step 1 — Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/cats-dogs-classifier.git
-cd cats-dogs-classifier
+git clone https://github.com/MarkAllen-Almodovar/eventdriven.git
+cd eventdriven
 ```
 
 ### Step 2 — Install frontend dependencies
@@ -305,7 +305,7 @@ curl -X POST http://127.0.0.1:8000/pets/predict \
 |------|------|
 | Mark Allen Almodovar | Lead Developer |
 | Jan Deive Marinas | Developer |
-| Mykeah Jamie Serrano | Developer |
+| Mykeah Jasmie Serrano | Developer |
 | Reignce Dela Pena | Developer |
 
 **Course/Section:** BSIT-III / BSCS-III | ITE03 + EVENTDP Finals Project
