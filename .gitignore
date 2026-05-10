@@ -31,29 +31,34 @@ logs
 __pycache__/
 *.py[cod]
 *.pyo
-tf_env/
 venv/
+venv_new/
 .venv/
+tf_env/
 
 # ── ML — large files not suitable for git ─────────────────────────────────────
-# Dataset images (tens of thousands of files, hundreds of MB)
+# Dataset images (hundreds of MB)
+dogs_cats_split/
+cats_set/
+dogs_set/
 train/
 validation/
 test/
 
-# Trained model weights (200+ MB each)
+# Trained model weights (large binary files)
 saved_model/*.keras
+saved_model/*.h5
+cats_dogs_model.keras
+*.keras
+
+# Keep label JSON files (small, needed to run the app)
+!saved_model/class_names.json
+!saved_model/pets_class_names.json
 
 # Temporary upload directory
 uploads/
 
-# Keep the class labels JSON (small, needed to run the app)
-!saved_model/class_names.json
-
 # ── Misc ──────────────────────────────────────────────────────────────────────
-uvicorn
-project_tree.txt
-
 # Selfie photos and processed output — personal data, not for repo
 selfies/
 selfies_processed/

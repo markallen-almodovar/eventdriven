@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./layout/NavBar.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
-import ClassifyPage from "./pages/ClassifyPage.jsx";
+import ClassifyPetsPage from "./pages/ClassifyPetsPage.jsx";
 import LoginPage from "./pages/auth/LoginPage.jsx";
 import RegisterPage from "./pages/auth/RegisterPage.jsx";
 import StudentsPage from "./pages/students/StudentsPage.jsx";
@@ -22,7 +22,7 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/classify" element={<ClassifyPage />} />
+        <Route path="/classify-pets" element={<ClassifyPetsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route

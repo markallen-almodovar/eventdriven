@@ -27,10 +27,10 @@ export default function Layout() {
             </svg>
           </button>
           <NavLink to="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-xs font-black">
-              FP
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-xs font-black">
+              🐾
             </div>
-            <span className="font-semibold text-sm tracking-wide text-slate-100">FinalProject</span>
+            <span className="font-semibold text-sm tracking-wide text-slate-100">CatsDogs AI</span>
           </NavLink>
         </div>
 
@@ -97,7 +97,7 @@ export default function Layout() {
             </NavLink>
 
             <NavLink
-              to="/classify"
+              to="/classify-pets"
               onClick={() => setOpenNav(false)}
               className={({ isActive }) =>
                 `flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all ${
@@ -108,9 +108,9 @@ export default function Layout() {
               }
             >
               <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-2" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              AI Classifier
+              Pets Classifier
             </NavLink>
 
             <div className="border-t border-slate-800 my-3" />

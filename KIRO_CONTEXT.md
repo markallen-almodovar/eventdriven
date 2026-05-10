@@ -1,6 +1,7 @@
-# Project Summary — Final Project (ITE03 + EVENTDP)
+# Project Context — Cats vs Dogs Classifier + Student Management System
 
 > Paste this file into a new Kiro chat to restore full context.
+> Last updated: May 7, 2026
 
 ---
 
@@ -9,22 +10,27 @@
 A unified React web app combining two school subjects into one final project.
 Both subjects are under the same instructor who merged the requirements.
 
-- **EVENTDP** → Gender Classification AI (ML/event-driven)
-- **ITE03** → Student Management System (full-stack web CRUD)
+- **EVENTDP** → Cats vs Dogs AI Classifier (MobileNetV2 transfer learning)
+- **ITE03** → Student Management System (full-stack CRUD)
+
+**The gender classifier was removed.** Only Cats vs Dogs + Student Management remain.
 
 ---
 
 ## Two features in one app
 
-### 1. Gender Classification AI (EVENTDP)
-- Upload a face image OR use webcam → FastAPI → MobileNetV2 model → Male/Female + confidence %
+### 1. Cats vs Dogs Classifier (EVENTDP)
+- Upload a pet image OR use webcam → FastAPI → MobileNetV2 model → Cat/Dog + confidence %
 - Drag & drop or click to upload, image preview, confidence bar
 - Webcam mode: live video, capture frame, classify
 - Low-confidence warning (< 60%) with amber styling
 - Classification history log (last 5 results with thumbnails)
-- FastAPI runs on port 8000, model: `saved_model/gender_classification_model.keras`
-- Model: MobileNetV2 transfer learning, 89.97% val accuracy, trained on ~48k CelebA images
-- Known limitation: CelebA dataset bias toward Western faces — young Asian males may misclassify
+- FastAPI runs on port 8000, endpoint: `/pets/predict`
+- Model: `saved_model/pets_classification_model_fixed.h5` (patched h5 for Keras 3 compat)
+- Labels: `saved_model/pets_class_names.json` → `{"cats_set": 0, "dogs_set": 1}`
+- Accuracy: 91.08% val, 90.17% test
+- Training: two-phase MobileNetV2 (Phase 1: head only, Phase 2: unfreeze top 53 layers)
+- Preprocessing: resize 160×160, divide by 255 — NO autocontrast
 
 ### 2. Student Management System (ITE03)
 - Full CRUD for student records with JWT authentication (8h token, auto-logout)
@@ -32,8 +38,8 @@ Both subjects are under the same instructor who merged the requirements.
 - Register/Login → protected routes → view/add/edit/delete students
 - Real-time search across all fields
 - Sortable columns (click header to toggle asc/desc)
-- Pagination (10 per page with smart ellipsis)
-- Export to CSV (current filtered+sorted view)
+- Pagination (10 per page)
+- Export to CSV
 - Analytics Dashboard: stat cards + donut chart (by course) + bar chart (by year level)
 - Express runs on port 5000, MySQL database: `studentdb`
 
@@ -41,8 +47,8 @@ Both subjects are under the same instructor who merged the requirements.
 
 ## Tech Stack
 
-- **Frontend:** React 19 + Vite + Tailwind CSS + React Router v7 + Recharts
-- **ML Backend:** FastAPI + TensorFlow 2.x + MobileNetV2 + Pillow (`ml-server.py`, `classify.py`)
+- **Frontend:** React 19 + Vite 7 + Tailwind CSS 3 + React Router v7 + Recharts
+- **ML Backend:** FastAPI 0.115 + TensorFlow 2.15 + Keras 3.12 + MobileNetV2 + Pillow
 - **SMS Backend:** Express.js + MySQL2 + bcryptjs + JWT (`database/server.js`)
 - **Database:** MySQL via XAMPP (tables: `users`, `students`)
 
@@ -50,8 +56,10 @@ Both subjects are under the same instructor who merged the requirements.
 
 ## Design
 
-- Dark theme: `slate-950` background, `slate-900` cards, `violet-600` accent
-- Dark sidebar nav with SVG icons, gradient logo mark, user avatar initial
+- Dark theme: `slate-950` background, `slate-900` cards
+- Orange accent (`orange-500/600`) for AI/pets classifier
+- Violet accent (`violet-600`) for student management + auth
+- Collapsible sidebar nav
 - Toast notifications (no alert() calls)
 - Animated skeleton loading rows for the students table
 - Animated 404 page with 5-second countdown auto-redirect
@@ -59,86 +67,95 @@ Both subjects are under the same instructor who merged the requirements.
 
 ---
 
-## Folder Structure
+## Active Routes
+
+| Path | Component | Auth |
+|------|-----------|------|
+| `/` | LandingPage | — |
+| `/classify-pets` | ClassifyPetsPage | — |
+| `/login` | LoginPage | — |
+| `/register` | RegisterPage | — |
+| `/students` | StudentsPage | JWT |
+| `/students/add` | AddStudentPage | JWT |
+| `/students/edit/:id` | EditStudentPage | JWT |
+| `/students/dashboard` | DashboardPage | JWT |
+| `/students/:id` | StudentProfilePage | JWT |
+
+Note: `/classify` (gender) route is REMOVED. `ClassifyPage.jsx` still exists in src/pages/ but is not imported or routed.
+
+---
+
+## Key Files
 
 ```
-src/
-  App.jsx                          # routes + ProtectedRoute
-  main.jsx                         # entry point + AuthProvider
-  config/api.js                    # API URLs + COURSES list
-  context/AuthContext.jsx          # JWT auth state + auto-expiry timer
-  components/
-    Toast.jsx                      # toast notifications + useToast hook
-    SkeletonRow.jsx                # animated skeleton for table loading
-  layout/NavBar.jsx                # dark sidebar layout
-  pages/
-    LandingPage.jsx                # hero + about section + feature cards
-    ClassifyPage.jsx               # ML classifier (upload + webcam tabs + history)
-    NotFound.jsx                   # 404 with bounce animation + countdown
-    auth/
-      LoginPage.jsx
-      RegisterPage.jsx
-    students/
-      StudentsPage.jsx             # list + search + sort + paginate + CSV export
-      AddStudentPage.jsx
-      EditStudentPage.jsx
-      DashboardPage.jsx            # stat cards + recharts pie + bar
+src/App.jsx                          # routes + ProtectedRoute
+src/main.jsx                         # entry point + AuthProvider
+src/config/api.js                    # API URLs + COURSES list
+src/context/AuthContext.jsx          # JWT auth state + auto-expiry timer
+src/components/Toast.jsx             # toast notifications + useToast hook
+src/components/SkeletonRow.jsx       # animated skeleton for table loading
+src/layout/NavBar.jsx                # dark sidebar layout (no gender link)
+src/pages/LandingPage.jsx            # hero + about + how it works + features + visual + developer
+src/pages/ClassifyPetsPage.jsx       # pets classifier (upload + webcam tabs + history)
+src/pages/ClassifyPage.jsx           # UNUSED — gender classifier (kept but not routed)
+src/pages/auth/LoginPage.jsx
+src/pages/auth/RegisterPage.jsx
+src/pages/students/StudentsPage.jsx
+src/pages/students/AddStudentPage.jsx
+src/pages/students/EditStudentPage.jsx
+src/pages/students/DashboardPage.jsx
+src/pages/students/StudentProfilePage.jsx
 
-database/
-  server.js                        # Express REST API
-  mysql.js                         # MySQL pool (reads .env)
-  init.sql                         # run once to create DB + tables
-  .env                             # DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, JWT_SECRET, PORT
+database/server.js                   # Express REST API
+database/mysql.js                    # MySQL pool (reads .env)
+database/init.sql                    # DB setup + seed data
 
-.env                               # VITE_EXPRESS_API, VITE_FASTAPI_URL
-.env.example                       # safe template to commit
-ml-server.py                       # FastAPI server + /health endpoint + stale upload cleanup
-classify.py                        # loads model, autocontrast preprocessing, classify_image()
-fine_tune_model.py                 # MobileNetV2 two-phase training script
-evaluate_model.py                  # runs against test/ for true accuracy
-requirements.txt                   # Python deps
-saved_model/
-  gender_classification_model.keras
-  class_names.json                 # {"Female": 0, "Male": 1}
-  best_checkpoint.keras
-train/female/, train/male/         # ~48k training images
-validation/female/, validation/male/ # ~11k validation images
-test/female/, test/male/           # 150 held-out test images
+mlserver.py                          # FastAPI server (active entry point)
+ml-server.py                         # OLD — kept for reference, not used
+classify_pets.py                     # pets model inference (uses fixed h5)
+classify.py                          # gender model inference (not called by active routes)
+
+train_pets_model.py                  # MobileNetV2 two-phase training
+evaluate_pets_model.py               # test-set evaluation
+convert_models.py                    # .keras → .h5 conversion
+patch_pets_h5.py                     # removes 'groups' key for Keras 3 compat
+
+saved_model/pets_classification_model_fixed.h5   # ACTIVE runtime model
+saved_model/pets_class_names.json                # {"cats_set": 0, "dogs_set": 1}
+saved_model/gender_classification_model.keras    # legacy, not used by active routes
 ```
 
 ---
 
-## How to Run
+## How to Start
 
-1. **XAMPP** → Start MySQL only (Apache not needed)
-2. **Database:** `mysql -u root -e "source database/init.sql"` (or run in phpMyAdmin)
-3. **Express:** `cd database` → `node server.js` (port 5000)
-4. **FastAPI:** `python -m uvicorn ml-server:app --reload --port 8000`
-5. **React:** `npm run dev` (port 5173)
+```bash
+# Terminal 1 — Frontend (port 5173)
+npm run dev
 
----
+# Terminal 2 — Express backend (port 5000, needs MySQL running in XAMPP)
+cd database && node server.js
 
-## Key Decisions Made
+# Terminal 3 — ML server (port 8000, models load in ~60-90s background thread)
+venv_new\Scripts\python.exe -W ignore -m uvicorn mlserver:app --port 8000
+```
 
-- `database/.env` holds all secrets — `JWT_SECRET` is required or server won't start
-- `.env` at root holds Vite API URLs (`VITE_EXPRESS_API`, `VITE_FASTAPI_URL`)
-- Both `.env` files are in `.gitignore`
-- `student_no` is UNIQUE, `email` is UNIQUE in the students table
-- JWT tokens auto-expire and auto-logout on the frontend
-- `evaluate_model.py` runs against `test/` (true accuracy), not `validation/`
-- ESLint scoped to `src/**` only — ignores node_modules, tf_env, venv
-- Toast notifications replace all `alert()` calls
-- `classify.py` loads the model once at startup, not per request
-- `classify.py` applies `ImageOps.autocontrast` before inference to reduce webcam vs training data gap
-- `ml-server.py` has 5MB file size limit, validates file extensions, cleans stale uploads on startup
-- `ml-server.py` has `/health` endpoint returning model metadata
-- `fine_tune_model.py` uses MobileNetV2 transfer learning (Phase 1: head only, Phase 2: unfreeze top layers)
-- Class labels loaded from `saved_model/class_names.json` (generated by training script)
-- IMG_SIZE derived dynamically from model input shape (works for both 150 and 160)
+Or double-click `START_SERVERS.cmd`.
 
 ---
 
-## Express API Endpoints
+## Known Issues / Notes
+
+- **ML server startup:** TF 2.15 on Windows hangs if models are loaded at import time (JSON dump bug). Fixed by loading models in a FastAPI `startup` event using `asyncio.run_in_executor`. Server responds at port 8000 immediately; models ready in ~60-90s.
+- **Model format:** Pets model saved with Keras 2.15 (has `groups:1` in DepthwiseConv2D). Patched to `_fixed.h5` for Keras 3 compatibility. Gender model saved with Keras 3.12.1 — loaded via `keras.saving.load_model`.
+- **FastAPI version:** Must be 0.115.12. Older versions (0.104.x) are incompatible with pydantic v2.
+- **GPU:** RTX 3050 present but CUDA not installed. Training runs on CPU. Install CUDA 11.8 + cuDNN 8.6 for GPU acceleration.
+- **MySQL:** Must be started in XAMPP before running Express. Express continues without DB but student features won't work.
+- **Vite port:** Configured to 5173 with `strictPort: false` fallback. If 5173 is taken it uses 5174.
+
+---
+
+## Express API
 
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
@@ -154,17 +171,18 @@ test/female/, test/male/           # 150 held-out test images
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | / | Health check |
+| GET | / | Health check + models_ready flag |
 | GET | /health | Model info + input size + class labels |
-| POST | /upload | Upload image → returns label + confidence |
+| POST | /pets/predict | Upload pet image → label + confidence |
+| POST | /pets/upload | Alias for /pets/predict |
 
 ---
 
-## ML Model Details
+## Team
 
-- Architecture: MobileNetV2 (ImageNet pretrained) + GlobalAveragePooling + Dense head
-- Input: 160×160 RGB, normalized to [0,1]
-- Phase 1: Train head only (base frozen), LR=1e-3, EarlyStopping patience=5
-- Phase 2: Unfreeze top 54 layers, LR=1e-4, ReduceLROnPlateau, EarlyStopping patience=7
-- Best val_accuracy: 89.97% (val_loss: 0.2813)
-- Saved to: `saved_model/gender_classification_model.keras`
+- Mark Allen Almodovar — Lead Developer
+- Jan Deive Marinas — Developer
+- Mykeah Jasmie Serrano — Developer
+- Reignce Dela Pena — Developer
+
+Course/Section: BSIT-III

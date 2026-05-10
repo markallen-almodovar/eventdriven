@@ -16,7 +16,10 @@ const db = mysql.createPool({
 db.getConnection((err, connection) => {
   if (err) {
     console.error("❌ MySQL connection failed:", err.message);
-    process.exit(1);
+    console.log("⚠️  Server will continue running, but database features won't work.");
+    console.log("💡 Start MySQL in XAMPP and restart this server to enable database features.");
+    // Don't exit - let server run without database
+    return;
   }
   console.log("✅ MySQL connected to database:", process.env.DB_NAME || "studentdb");
   connection.release();

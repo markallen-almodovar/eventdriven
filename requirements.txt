@@ -1,7 +1,9 @@
 fastapi==0.115.12
-uvicorn==0.34.3
+uvicorn[standard]==0.34.3
 tensorflow==2.15.0
+keras==3.12.1
 numpy==1.26.4
 pillow==11.2.1
 python-multipart==0.0.20
 scikit-learn==1.6.1
+h5py>=3.10.0
