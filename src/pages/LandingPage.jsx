@@ -345,8 +345,7 @@ export default function LandingPage() {
                 { initial: "M", name: "Mark Allen Almodovar", role: "Lead Developer" },
                 { initial: "J", name: "Jan Deive Marinas",    role: "Developer" },
                 { initial: "M", name: "Mykeah Jamie Serrano",role: "Developer" },
-                { initial: "R", name: "Reignce Dela Pena",    role: "Developer" },
-                { initial: "C", name: "Christian Paul Cudal", role: "Developer" }
+                { initial: "R", name: "Reignce Dela Pena",    role: "Developer" }
               ].map((member) => (
                 <div key={member.name} className="flex items-center gap-3 bg-slate-800 border border-slate-700 rounded-xl p-4">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-sm font-black text-white flex-shrink-0">
